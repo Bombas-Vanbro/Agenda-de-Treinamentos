@@ -454,19 +454,50 @@
 
     tr:hover { background-color: var(--table-hover); }
   </style>
+
+  <!-- CABEÇALHO PADRÃO (cabecalho-padrao.css) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    .cab-padrao{background:#1e2a4a;color:#fff;padding:.9rem 0;font-family:'Inter',system-ui,sans-serif}
+    .cab-padrao .cab-conteudo{max-width:1320px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:1rem}
+    .cab-padrao .cab-logo{height:36px;background:#fff;border-radius:6px;padding:3px}
+    .cab-padrao .cab-textos{flex:1;min-width:0}
+    .cab-padrao .cab-titulo{font-size:1.15rem;font-weight:700;margin:0;line-height:1.3;color:#fff}
+    .cab-padrao .cab-subtitulo{font-size:.8rem;color:#b9c3dc}
+    .cab-padrao .cab-acoes{display:flex;gap:.5rem;flex-shrink:0}
+    .cab-padrao .cab-btn{display:inline-flex;align-items:center;justify-content:center;gap:.35rem;min-width:32px;height:32px;padding:0 .55rem;border:1px solid rgba(255,255,255,.85);border-radius:6px;background:transparent;color:#fff;font:500 .8rem 'Inter',system-ui,sans-serif;text-decoration:none;cursor:pointer;transition:background .15s,color .15s}
+    .cab-padrao .cab-btn:hover{background:#fff;color:#1e2a4a}
+    .cab-padrao .cab-btn:focus-visible{outline:2px solid #7dd3fc;outline-offset:2px}
+    .cab-padrao .cab-btn:disabled{opacity:.5;cursor:default}
+    @media (max-width:576px){.cab-padrao .cab-conteudo{padding:0 1rem}.cab-padrao .cab-titulo{font-size:1rem}.cab-padrao .cab-btn span{display:none}}
+    @media print{.cab-padrao{background:#fff;color:#000;border-bottom:2px solid #000}.cab-padrao .cab-titulo{color:#000}.cab-padrao .cab-subtitulo{color:#333}.cab-padrao .cab-acoes{display:none}}
+    /* Esta página aplica a fonte Segoe UI em todos os elementos (*); aqui o cabeçalho volta para Inter */
+    .cab-padrao, .cab-padrao *{font-family:'Inter',system-ui,sans-serif}
+    /* Faixa de ponta a ponta, anulando o padding de 20px do body */
+    .cab-padrao{margin:-20px -20px 20px}
+    /* Alinha o conteúdo do cabeçalho com os cards (mesmas medidas do .page-wrap: 95% da área útil, até 1800px) */
+    .cab-padrao .cab-conteudo{width:calc((100% - 40px) * .95);max-width:1800px;padding:0}
+  </style>
 </head>
 <body>
 
-  <div class="page-wrap">
-
-  <div class="header-bar">
-      <div class="header-title">
-        <div class="header-logo-wrap">
-          <img src="Logo.png" alt="Logo" class="header-logo">
-        </div>
-        <h1>Cadastro de Treinamentos</h1>
+  <!-- CABEÇALHO PADRÃO -->
+  <header class="cab-padrao">
+    <div class="cab-conteudo">
+      <img class="cab-logo" src="Logo.png" alt="" onerror="this.remove()">
+      <div class="cab-textos">
+        <h1 class="cab-titulo">Cadastro de Treinamentos</h1>
+        <div class="cab-subtitulo" id="ultimaAtualizacaoCabecalho">Carregando…</div>
+      </div>
+      <div class="cab-acoes">
+        <button type="button" class="cab-btn" onclick="sincronizarAgora()" title="Sincronizar dados"><i class="bi bi-arrow-clockwise"></i></button>
+        <button type="button" class="cab-btn" onclick="window.print()" title="Imprimir"><i class="bi bi-printer"></i></button>
       </div>
     </div>
+  </header>
+
+  <div class="page-wrap">
 
     <div class="container">
     <div class="top-layout">
@@ -668,13 +699,17 @@
           renderizarDados(data);
           atualizarHorarioSincronizacao();
         })
-        .catch(err => console.error("Erro ao carregar dados:", err));
+        .catch(err => {
+          console.error("Erro ao carregar dados:", err);
+          document.getElementById('ultimaAtualizacaoCabecalho').textContent = 'Falha ao carregar';
+        });
     }
 
     function atualizarHorarioSincronizacao() {
       const agora = new Date();
       const hora = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
       document.getElementById('ultimaAtualizacao').textContent = `Atualizado às ${hora}`;
+      document.getElementById('ultimaAtualizacaoCabecalho').textContent = 'Atualizado em ' + agora.toLocaleString('pt-BR');
     }
 
     function sincronizarAgora() {
