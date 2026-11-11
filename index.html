@@ -1,1532 +1,974 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ATA Engenharia</title>
-<link rel="icon" type="image/png" href="favicon1.png">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --navy:#1B3B63;
-    --navy-dark:#122C4C;
-    --page-bg:#EEF2F7;
-    --card-bg:#FFFFFF;
-    --border:#E3E8EF;
-    --ink:#1F2A3A;
-    --muted:#6B7686;
-    --orange:#F2994A;
-    --orange-dark:#DD8235;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Treinamentos</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon2.png">
 
-    --pill-green-bg:#E5F6EA; --pill-green-txt:#1F8A4C;
-    --pill-red-bg:#FCE9E7;   --pill-red-txt:#C0392B;
-    --pill-amber-bg:#FDF0DC; --pill-amber-txt:#B7791F;
-    --pill-mint-bg:#E3F5F1;  --pill-mint-txt:#1E8074;
-    --pill-gray-bg:#EEF0F3;  --pill-gray-txt:#6B7280;
-    --pill-purple-bg:#EFEAFB; --pill-purple-txt:#6B4FBB;
-    --pill-blue-bg:#E3EEFB;  --pill-blue-txt:#2A64B0;
-  }
-  *{box-sizing:border-box;}
-  body{
-    background:var(--page-bg);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    min-height:100vh;
-  }
-
-  .page{
-    max-width:min(1800px, 96vw);
-    margin:0 auto;
-    padding:1.5rem 1.25rem 3rem 1.25rem;
-  }
-
-  header.topbar{
-    background:linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
-    border-radius:14px;
-    padding:1.4rem 1.6rem;
-    display:flex;
-    align-items:center;
-    gap:1rem;
-    box-shadow:0 4px 14px rgba(18,44,76,0.25);
-    margin-bottom:1.25rem;
-  }
-  .icon-badge{
-    width:52px;
-    height:52px;
-    border-radius:12px;
-    background:#fff;
-    padding:6px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-shrink:0;
-  }
-  .icon-badge img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-  }
-  header.topbar h1{
-    color:#fff;
-    font-size:1.4rem;
-    font-weight:800;
-    margin:0;
-    letter-spacing:.2px;
-  }
-  header.topbar .subtitle{
-    color:rgba(255,255,255,0.75);
-    font-size:.85rem;
-    margin-top:.1rem;
-  }
-  .area-usuario{
-    margin-left:auto;
-    display:flex;
-    align-items:center;
-    gap:.6rem;
-  }
-  .area-usuario .btn{
-    border-radius:8px;
-    font-size:.8rem;
-    font-weight:600;
-  }
-  .btn-login{
-    background:rgba(255,255,255,0.12);
-    border:1px solid rgba(255,255,255,0.3);
-    color:#fff;
-  }
-  .btn-login:hover{background:rgba(255,255,255,0.22);color:#fff;}
-  .usuario-logado{
-    color:#fff;
-    font-size:.82rem;
-    display:flex;
-    align-items:center;
-    gap:.5rem;
-  }
-  .usuario-logado .sair{
-    color:rgba(255,255,255,0.75);
-    text-decoration:underline;
-    cursor:pointer;
-    font-size:.76rem;
-  }
-
-  .grid{
-    display:grid;
-    grid-template-columns: minmax(300px, 380px) 1fr;
-    gap:1.1rem;
-    align-items:start;
-  }
-  @media (max-width: 900px){
-    .grid{grid-template-columns:1fr;}
-  }
-
-  .card{
-    background:var(--card-bg);
-    border:1px solid var(--border);
-    border-radius:12px;
-    box-shadow:0 1px 3px rgba(15,35,60,0.06);
-    padding:1.25rem;
-    margin-bottom:1.1rem;
-  }
-  .card-title{
-    display:flex;
-    align-items:center;
-    gap:.5rem;
-    font-weight:700;
-    font-size:1rem;
-    color:var(--ink);
-    margin-bottom:.15rem;
-  }
-  .card-subtitle{
-    color:var(--muted);
-    font-size:.8rem;
-    margin-bottom:1rem;
-  }
-  .card-title svg{width:18px;height:18px;color:var(--navy);}
-
-  label.field-label{
-    font-size:.8rem;
-    font-weight:600;
-    color:var(--ink);
-    margin-bottom:.3rem;
-    display:block;
-  }
-  .form-select, .form-control{
-    border-radius:8px;
-    border-color:var(--border);
-    font-size:.88rem;
-  }
-  .form-select:focus, .form-control:focus{
-    border-color:var(--navy);
-    box-shadow:0 0 0 .2rem rgba(27,59,99,0.12);
-  }
-
-  .btn-navy{
-    background:var(--navy);
-    border-color:var(--navy);
-    color:#fff;
-    font-weight:600;
-    border-radius:9px;
-    padding:.55rem 1rem;
-  }
-  .btn-navy:hover{background:var(--navy-dark);border-color:var(--navy-dark);color:#fff;}
-  .btn-outline-navy{
-    background:#fff;
-    border:1px solid var(--border);
-    color:var(--navy);
-    font-weight:600;
-    border-radius:9px;
-  }
-  .btn-outline-navy:hover{background:#F4F7FB;color:var(--navy);}
-
-  /* Tabs de categoria */
-  .cat-tabs{
-    display:flex;
-    flex-wrap:wrap;
-    gap:.4rem;
-    margin-bottom:1rem;
-  }
-  .cat-tab{
-    border:1px solid var(--border);
-    background:#fff;
-    color:var(--muted);
-    font-size:.82rem;
-    font-weight:600;
-    padding:.4rem .85rem;
-    border-radius:20px;
-    cursor:pointer;
-    white-space:nowrap;
-  }
-  .cat-tab.active{
-    background:var(--navy);
-    border-color:var(--navy);
-    color:#fff;
-  }
-  .cat-tab .count{
-    opacity:.7;
-    font-weight:500;
-    margin-left:.25rem;
-  }
-
-  .filter-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:.5rem;
-    align-items:center;
-    margin-bottom:1rem;
-  }
-  .filter-row .form-select, .filter-row .form-control{
-    max-width:190px;
-    font-size:.82rem;
-  }
-
-  table.tarefas-table{
-    width:100%;
-    border-collapse:separate;
-    border-spacing:0;
-  }
-  table.tarefas-table thead th{
-    background:var(--navy);
-    color:#fff;
-    font-size:.72rem;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:.03em;
-    padding:.65rem .75rem;
-    text-align:left;
-    white-space:nowrap;
-  }
-  table.tarefas-table thead th:first-child{border-top-left-radius:8px;}
-  table.tarefas-table thead th:last-child{border-top-right-radius:8px;}
-  table.tarefas-table tbody td{
-    padding:.7rem .75rem;
-    border-bottom:1px solid var(--border);
-    font-size:.85rem;
-    vertical-align:top;
-  }
-  table.tarefas-table tbody tr:hover{background:#FAFBFD;}
-  table.tarefas-table tbody tr.concluida{opacity:.6;}
-  table.tarefas-table tbody tr.concluida td.atividade-cell .atividade-title{
-    text-decoration:line-through;
-    text-decoration-color:#aaa;
-  }
-
-  .pill{
-    display:inline-block;
-    font-size:.72rem;
-    font-weight:700;
-    padding:.2rem .55rem;
-    border-radius:20px;
-    white-space:nowrap;
-  }
-  .pill-green{background:var(--pill-green-bg);color:var(--pill-green-txt);}
-  .pill-red{background:var(--pill-red-bg);color:var(--pill-red-txt);}
-  .pill-amber{background:var(--pill-amber-bg);color:var(--pill-amber-txt);}
-  .pill-mint{background:var(--pill-mint-bg);color:var(--pill-mint-txt);}
-  .pill-gray{background:var(--pill-gray-bg);color:var(--pill-gray-txt);}
-  .pill-purple{background:var(--pill-purple-bg);color:var(--pill-purple-txt);}
-  .pill-blue{background:var(--pill-blue-bg);color:var(--pill-blue-txt);}
-
-  .cat-tab.cat-config-btn{
-    border-style:dashed;
-    color:var(--navy);
-    background:transparent;
-  }
-  .cat-tab.cat-config-btn:hover{background:#F4F7FB;}
-  .cat-config{display:flex;flex-direction:column;gap:.4rem;}
-  .cat-row{
-    display:flex;
-    align-items:center;
-    gap:.5rem;
-    flex-wrap:wrap;
-    padding:.5rem .65rem;
-    border:1px solid var(--border);
-    border-radius:9px;
-    background:#fff;
-  }
-  .cat-row .cat-nome{font-weight:600;font-size:.88rem;flex:1;min-width:120px;}
-  .cat-row .cat-qtd{color:var(--muted);font-size:.74rem;}
-  .cat-row.confirmando{background:var(--pill-amber-bg);border-color:#F0D9AE;}
-  .cat-row .form-control, .cat-row .form-select{max-width:none;flex:1;min-width:140px;font-size:.82rem;}
-  .cat-aviso{font-size:.78rem;color:var(--ink);width:100%;}
-
-  .atividade-title{font-weight:600;font-size:.85rem;line-height:1.3;}
-  .atividade-status{font-size:.78rem;color:var(--muted);margin-top:.15rem;line-height:1.35;max-width:340px;}
-  .cell-muted{color:var(--muted);font-size:.8rem;}
-  .cell-sub{color:#9aa3af;font-size:.68rem;margin-top:2px;font-style:italic;}
-
-  .icon-btn{
-    border:none;
-    background:transparent;
-    color:var(--muted);
-    width:28px;
-    height:28px;
-    border-radius:6px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-  }
-  .icon-btn:hover{background:#F0F3F8;color:var(--navy);}
-  .icon-btn.finalizar:hover{background:var(--pill-green-bg);color:var(--pill-green-txt);}
-  .icon-btn.btn-reabrir:hover{background:var(--pill-amber-bg);color:var(--pill-amber-txt);}
-
-  .chk-select{
-    width:16px;
-    height:16px;
-    cursor:pointer;
-  }
-  .selecao-info{
-    font-size:.78rem;
-    color:var(--muted);
-    display:flex;
-    align-items:center;
-    gap:.5rem;
-  }
-  .selecao-info button{
-    background:none;
-    border:none;
-    color:var(--navy);
-    font-size:.78rem;
-    font-weight:600;
-    padding:0;
-    cursor:pointer;
-    text-decoration:underline;
-  }
-
-  .stat-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:.55rem 0;
-    border-bottom:1px solid var(--border);
-    font-size:.85rem;
-  }
-  .stat-row:last-child{border-bottom:none;}
-  .stat-label{color:var(--muted);}
-
-  .resumo-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:.6rem;
-  }
-  .resumo-tile{
-    border-radius:10px;
-    padding:.65rem .75rem;
-    display:flex;
-    flex-direction:column;
-    gap:.15rem;
-  }
-  .resumo-tile.full{grid-column:1 / -1;}
-  .resumo-tile svg{width:15px;height:15px;opacity:.8;}
-  .resumo-tile .valor{font-size:1.3rem;font-weight:800;line-height:1;margin-top:.3rem;}
-  .resumo-tile .rotulo{font-size:.66rem;text-transform:uppercase;letter-spacing:.03em;opacity:.8;}
-  .resumo-tile.t-gray{background:var(--pill-gray-bg);color:var(--pill-gray-txt);}
-  .resumo-tile.t-mint{background:var(--pill-mint-bg);color:var(--pill-mint-txt);}
-  .resumo-tile.t-red{background:var(--pill-red-bg);color:var(--pill-red-txt);}
-  .resumo-tile.t-green{background:var(--pill-green-bg);color:var(--pill-green-txt);}
-
-  .empty-state, .loading-state{
-    text-align:center;
-    padding:3rem 1rem;
-    color:var(--muted);
-    font-size:.88rem;
-  }
-
-  /* ---------------- Impressão da pauta ---------------- */
-  .print-only{display:none;}
-  .pt-titulo{font-size:1.3rem;font-weight:800;margin:0;}
-  .pt-subtitulo{font-size:.85rem;color:var(--muted);margin-bottom:1rem;}
-  .pt-resumo{display:flex;gap:1.5rem;margin-bottom:1.2rem;font-size:.85rem;}
-  .pt-resumo b{font-size:1.1rem;}
-  .pt-secao{margin-bottom:1.1rem;}
-  .pt-secao h2{
-    font-size:.95rem;
-    font-weight:700;
-    border-bottom:2px solid #1B3B63;
-    padding-bottom:.2rem;
-    margin-bottom:.5rem;
-  }
-  .pt-item{
-    padding:.35rem 0;
-    border-bottom:1px solid #ddd;
-    font-size:.82rem;
-    display:flex;
-    justify-content:space-between;
-    gap:1rem;
-  }
-  .pt-item .pt-desc{flex:1;}
-  .pt-item .pt-meta{color:#555;white-space:nowrap;font-size:.78rem;}
-  .pt-tag{
-    display:block;
-    font-size:.68rem;
-    font-weight:700;
-    color:#888;
-    text-transform:uppercase;
-    letter-spacing:.03em;
-    margin-bottom:.15rem;
-  }
-  .pt-tag .prio-alta{color:#C0392B;}
-  .pt-tag .prio-media{color:#B7791F;}
-  .pt-tag .prio-baixa{color:#1F8A4C;}
-  .pt-vazio{color:#888;font-size:.8rem;font-style:italic;padding:.3rem 0;}
-
-  @media print{
-    body *{visibility:hidden;}
-    #areaImpressao, #areaImpressao *{visibility:visible;}
-    #areaImpressao{
-      display:block;
-      position:absolute;
-      left:0; top:0;
-      width:100%;
-      color:#000;
-      background:#fff;
+  <!-- CSS do Flatpickr -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  
+  <style>
+    :root {
+      --bg-body: #eef2f7;
+      --bg-card: #ffffff;
+      --bg-input: #ffffff;
+      --border-color: #e2e8f0;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --primary-color: #1b3b63;
+      --primary-hover: #142c4d;
+      --table-header: #1b3b63;
+      --table-hover: #f1f5f9;
+      --logo-plate: #ffffff;
+      --logo-plate-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
-    .pt-secao{page-break-inside:avoid;}
-  }
-</style>
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
+    body { background-color: var(--bg-body); color: var(--text-main); padding: 20px; }
+    .page-wrap { max-width: 1800px; width: 95%; margin: 0 auto; }
+    .container { background: var(--bg-card); padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); border: 1px solid var(--border-color); }
+    
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--primary-color);
+      padding: 18px 25px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-logo-wrap {
+      background: var(--logo-plate, transparent);
+      padding: 6px 12px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: var(--logo-plate-shadow, none);
+    }
+
+    .header-logo {
+      height: 60px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .header-bar h1 { color: #ffffff; font-size: 1.5rem; }
+
+    .top-layout {
+      display: grid;
+      grid-template-columns: 7fr 3fr;
+      gap: 25px;
+      margin-bottom: 25px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 900px) {
+      .top-layout { grid-template-columns: 1fr; }
+    }
+
+    .form-container {
+      background: var(--bg-card);
+      padding: 16px 20px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .input-field { display: flex; flex-direction: column; }
+    .input-field.full-width { grid-column: 1 / -1; }
+    .input-field label { font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: var(--text-muted); }
+    .input-field input, .input-field select, .input-field textarea { 
+      padding: 10px; 
+      border: 1px solid var(--border-color); 
+      border-radius: 4px; 
+      font-size: 0.95rem; 
+      background: var(--bg-input); 
+      color: var(--text-main);
+    }
+    .input-field textarea {
+      resize: vertical;
+      min-height: 46px;
+      font-family: inherit;
+    }
+
+    .checkbox-group {
+      grid-column: 1 / -1;
+      background: var(--bg-input);
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      margin-top: 6px;
+    }
+
+    .checkbox-group p { font-weight: 600; font-size: 0.9rem; margin-bottom: 10px; color: var(--text-main); }
+    .checkbox-options { display: flex; flex-wrap: wrap; gap: 15px; }
+    .checkbox-item { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--text-main); }
+
+    button[type="submit"] {
+      grid-column: 1 / -1;
+      padding: 12px;
+      background-color: var(--primary-color);
+      border: none;
+      color: white;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+    button[type="submit"]:hover { background-color: var(--primary-hover); }
+    button[type="submit"]:disabled { background-color: #64748b; cursor: not-allowed; }
+
+    .calendar-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      gap: 10px;
+    }
+
+    .calendar-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .today-btn {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .today-btn:hover { background: var(--table-hover); }
+
+    .calendar-body {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .obs-input[readonly] {
+      cursor: pointer;
+    }
+
+    .flatpickr-calendar {
+      background: var(--bg-card) !important;
+      border: 1px solid var(--border-color) !important;
+      border-radius: 12px !important;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    }
+
+    .flatpickr-calendar.inline {
+      width: 100% !important;
+      max-width: none;
+      padding: 10px;
+    }
+
+    /* Torna a grade de dias fluida, acompanhando a largura do calendário */
+    .flatpickr-innerContainer,
+    .flatpickr-rContainer,
+    .flatpickr-days,
+    .dayContainer {
+      width: 100% !important;
+      max-width: none !important;
+      min-width: 0 !important;
+    }
+
+    .flatpickr-months {
+      background: var(--primary-color);
+      border-radius: 8px 8px 0 0;
+      padding: 6px 0;
+      margin: -10px -10px 10px -10px;
+    }
+    .flatpickr-current-month .flatpickr-monthDropdown-months,
+    .flatpickr-current-month input.cur-year {
+      font-weight: bold !important;
+      color: #ffffff !important;
+      font-size: 1.15rem !important;
+    }
+    .flatpickr-months .flatpickr-prev-month, 
+    .flatpickr-months .flatpickr-next-month {
+      color: #ffffff !important;
+      fill: #ffffff !important;
+    }
+
+    .flatpickr-weekdays,
+    .flatpickr-weekdaycontainer {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    span.flatpickr-weekday {
+      background: transparent !important;
+      color: var(--primary-color) !important;
+      font-weight: 700 !important;
+      font-size: 0.95rem;
+    }
+
+    .flatpickr-day {
+      max-width: none !important;
+      height: 42px !important;
+      line-height: 42px !important;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px !important;
+      color: var(--text-main);
+      font-weight: 500;
+      font-size: 1rem;
+      margin: 1px 0;
+    }
+    .flatpickr-day:hover {
+      background-color: var(--primary-color) !important;
+      color: #ffffff !important;
+      transform: scale(1.08);
+      transition: all 0.15s ease-in-out;
+    }
+
+    .flatpickr-day.today {
+      border: 2px solid #38bdf8 !important;
+      font-weight: bold;
+    }
+
+    .flatpickr-day.selected, 
+    .flatpickr-day.startRange, 
+    .flatpickr-day.endRange {
+      background: #10b981 !important;
+      border-color: #059669 !important;
+      color: #ffffff !important;
+      font-weight: bold !important;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+    }
+
+    /* Dias Agendados / Pendentes */
+    .flatpickr-day.dia-ocupado {
+      background: rgba(239, 68, 68, 0.14) !important;
+      color: var(--text-main) !important;
+      font-weight: 600 !important;
+      border: none !important;
+      border-radius: 8px !important;
+      box-shadow: none !important;
+      position: relative;
+    }
+    .flatpickr-day.dia-ocupado::after {
+      content: "";
+      position: absolute;
+      bottom: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ef4444;
+    }
+    .flatpickr-day.dia-ocupado:hover {
+      background: rgba(239, 68, 68, 0.28) !important;
+    }
+
+    /* Dias Concluídos (Esmaecidos) */
+    .flatpickr-day.dia-concluido {
+      background: rgba(100, 116, 139, 0.35) !important;
+      color: #94a3b8 !important;
+      border: 1px dashed #64748b !important;
+      opacity: 0.65;
+      box-shadow: none !important;
+    }
+    .flatpickr-day.dia-concluido:hover {
+      background: rgba(100, 116, 139, 0.7) !important;
+      color: #ffffff !important;
+      opacity: 1;
+    }
+
+    .table-container { 
+      overflow-x: auto; 
+      max-height: 650px; 
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      width: 100%;
+    }
+
+    .table-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .table-toolbar label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .table-toolbar select {
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--bg-input);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .toolbar-filtro {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sync-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 8px 8px 8px 16px;
+    }
+    .sync-info {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .sync-btn {
+      background: var(--primary-color);
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .sync-btn:hover { background: var(--primary-hover); }
+    .sync-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      font-size: 0.85rem; 
+      table-layout: auto;
+    }
+    
+    thead tr {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: var(--primary-color);
+    }
+
+    th { 
+      color: #ffffff !important; 
+      font-weight: 600; 
+      border-bottom: none !important;
+    }
+    
+    th, td { 
+      text-align: left; 
+      padding: 10px; 
+      border-bottom: 1px solid var(--border-color); 
+      color: var(--text-main);
+    }
+
+    th:nth-child(1), td:nth-child(1) { min-width: 160px; }
+    th:nth-child(2), td:nth-child(2) { min-width: 110px; }
+    th:nth-child(3), td:nth-child(3) { min-width: 150px; }
+    th:nth-child(4), td:nth-child(4) { min-width: 180px; }
+    th:nth-child(5), td:nth-child(5) { min-width: 190px; }
+    th:nth-child(6), td:nth-child(6) { min-width: 140px; }
+    th:nth-child(7), td:nth-child(7) { min-width: 110px; }
+    th:nth-child(8), td:nth-child(8) { min-width: 190px; }
+    th:nth-child(9), td:nth-child(9) { min-width: 120px; }
+
+    .obs-input {
+      width: 100%;
+      min-width: 200px;
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid transparent;
+      padding: 6px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-family: inherit;
+      resize: none;
+      overflow: hidden;
+    }
+    .obs-input:hover {
+      border-color: var(--border-color);
+    }
+    .obs-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      background: var(--bg-input);
+    }
+    .obs-input.salvo {
+      border-color: #10b981;
+    }
+
+    .status-select {
+      background: var(--bg-input);
+      color: var(--text-main);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .status-select.Pendente { background: #f59e0b; color: #ffffff; }
+    .status-select.Agendado { background: #3b82f6; color: #ffffff; }
+    .status-select.Concluído { background: #10b981; color: #ffffff; }
+    .status-select.Cancelado { background: #ef4444; color: #ffffff; }
+
+    tr:hover { background-color: var(--table-hover); }
+  </style>
+
+  <!-- CABEÇALHO PADRÃO (cabecalho-padrao.css) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    .cab-padrao{background:#1e2a4a;color:#fff;padding:.9rem 0;font-family:'Inter',system-ui,sans-serif}
+    .cab-padrao .cab-conteudo{max-width:1320px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:1rem}
+    .cab-padrao .cab-logo{height:36px;background:#fff;border-radius:6px;padding:3px}
+    .cab-padrao .cab-textos{flex:1;min-width:0}
+    .cab-padrao .cab-titulo{font-size:1.15rem;font-weight:700;margin:0;line-height:1.3;color:#fff}
+    .cab-padrao .cab-subtitulo{font-size:.8rem;color:#b9c3dc}
+    .cab-padrao .cab-acoes{display:flex;gap:.5rem;flex-shrink:0}
+    .cab-padrao .cab-btn{display:inline-flex;align-items:center;justify-content:center;gap:.35rem;min-width:32px;height:32px;padding:0 .55rem;border:1px solid rgba(255,255,255,.85);border-radius:6px;background:transparent;color:#fff;font:500 .8rem 'Inter',system-ui,sans-serif;text-decoration:none;cursor:pointer;transition:background .15s,color .15s}
+    .cab-padrao .cab-btn:hover{background:#fff;color:#1e2a4a}
+    .cab-padrao .cab-btn:focus-visible{outline:2px solid #7dd3fc;outline-offset:2px}
+    .cab-padrao .cab-btn:disabled{opacity:.5;cursor:default}
+    @media (max-width:576px){.cab-padrao .cab-conteudo{padding:0 1rem}.cab-padrao .cab-titulo{font-size:1rem}.cab-padrao .cab-btn span{display:none}}
+    @media print{.cab-padrao{background:#fff;color:#000;border-bottom:2px solid #000}.cab-padrao .cab-titulo{color:#000}.cab-padrao .cab-subtitulo{color:#333}.cab-padrao .cab-acoes{display:none}}
+    /* Esta página aplica a fonte Segoe UI em todos os elementos (*); aqui o cabeçalho volta para Inter */
+    .cab-padrao, .cab-padrao *{font-family:'Inter',system-ui,sans-serif}
+    /* Faixa de ponta a ponta, anulando o padding de 20px do body */
+    .cab-padrao{margin:-20px -20px 20px}
+    /* Alinha o conteúdo do cabeçalho com os cards (mesmas medidas do .page-wrap: 95% da área útil, até 1800px) */
+    .cab-padrao .cab-conteudo{width:calc((100% - 40px) * .95);max-width:1800px;padding:0}
+  </style>
 </head>
 <body>
 
-<div class="page">
-
-  <header class="topbar">
-    <div class="icon-badge">
-      <img src="logo1.png" alt="Logo Engenharia">
+  <!-- CABEÇALHO PADRÃO -->
+  <header class="cab-padrao">
+    <div class="cab-conteudo">
+      <img class="cab-logo" src="Logo.png" alt="" onerror="this.remove()">
+      <div class="cab-textos">
+        <h1 class="cab-titulo">Cadastro de Treinamentos</h1>
+        <div class="cab-subtitulo" id="ultimaAtualizacaoCabecalho">Carregando…</div>
+      </div>
+      <div class="cab-acoes">
+        <button type="button" class="cab-btn" onclick="sincronizarAgora()" title="Sincronizar dados"><i class="bi bi-arrow-clockwise"></i></button>
+        <button type="button" class="cab-btn" onclick="window.print()" title="Imprimir"><i class="bi bi-printer"></i></button>
+      </div>
     </div>
-    <div>
-      <h1>ATA Engenharia</h1>
-      <div class="subtitle" id="resumoHeader">Relação de tarefas do setor de Engenharia</div>
-    </div>
-    <div class="area-usuario" id="areaUsuario"></div>
   </header>
 
-  <div class="grid">
+  <div class="page-wrap">
 
-    <!-- COLUNA ESQUERDA -->
-    <div>
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>
-          Nova Tarefa
-        </div>
-        <div class="card-subtitle">Registrar uma atividade na relação</div>
-
-        <div class="mb-2">
-          <label class="field-label">Categoria</label>
-          <select class="form-select" id="campoCategoria"></select>
-        </div>
-        <div class="mb-2">
-          <label class="field-label">Atividade</label>
-          <textarea class="form-control" id="campoAtividade" rows="2" placeholder="Descreva a atividade..."></textarea>
-        </div>
-        <div class="mb-2">
-          <label class="field-label">Status / observações</label>
-          <textarea class="form-control" id="campoStatus" rows="2" placeholder="Situação atual (opcional)"></textarea>
-        </div>
-        <div class="mb-2">
-          <label class="field-label">Prioridade</label>
-          <select class="form-select" id="campoPrioridade">
-            <option value="">—</option>
-            <option value="Alta">Alta</option>
-            <option value="Média">Média</option>
-            <option value="Baixa">Baixa</option>
-          </select>
-        </div>
-        <div class="mb-2">
-          <label class="field-label">Responsável</label>
-          <input type="text" class="form-control" id="campoResponsavel" placeholder="Nome (opcional)">
-        </div>
-        <div class="row">
-          <div class="col-6 mb-2">
-            <label class="field-label">Registro</label>
-            <input type="date" class="form-control" id="campoRegistro">
+    <div class="container">
+    <div class="top-layout">
+      <!-- Formulário -->
+      <div class="form-container">
+        <form id="formTreinamento" class="form-grid">
+          <div class="input-field">
+            <label for="empresa">Empresa</label>
+            <input type="text" id="empresa" required placeholder="Nome da empresa">
           </div>
-          <div class="col-6 mb-2">
-            <label class="field-label">Previsão</label>
-            <input type="date" class="form-control" id="campoPrevisao">
+
+          <div class="input-field">
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" required placeholder="Ex: Alegrete">
           </div>
-        </div>
-        <div class="text-danger" style="font-size:.78rem;" id="erroFormulario"></div>
-        <button class="btn btn-navy w-100 mt-2" id="btnRegistrar">Registrar Tarefa</button>
-      </div>
 
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg>
-          Resumo
-        </div>
-        <div class="card-subtitle">Panorama geral das tarefas</div>
-        <div class="resumo-grid">
-          <div class="resumo-tile t-gray">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M3 10h18"></path></svg>
-            <div class="valor" id="statTotal">—</div>
-            <div class="rotulo">Total</div>
+          <div class="input-field">
+            <label for="uf">UF</label>
+            <input type="text" id="uf" maxlength="2" required placeholder="EX: RS" style="text-transform: uppercase;">
           </div>
-          <div class="resumo-tile t-mint">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M18 9l-5 5-4-4-4 4"></path></svg>
-            <div class="valor" id="statAbertas">—</div>
-            <div class="rotulo">Em aberto</div>
+
+          <div class="input-field">
+            <label for="estagiario">Estagiário / Participante</label>
+            <input type="text" id="estagiario" required placeholder="Nome completo">
           </div>
-          <div class="resumo-tile t-red">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"></path><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"></path><path d="M12 17h.01"></path></svg>
-            <div class="valor" id="statAtrasadas">—</div>
-            <div class="rotulo">Atrasadas</div>
+
+          <div class="input-field">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" required placeholder="email@exemplo.com">
           </div>
-          <div class="resumo-tile t-green">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-            <div class="valor" id="statConcluidas">—</div>
-            <div class="rotulo">Concluídas</div>
+
+          <div class="input-field">
+            <label for="periodoTreinamento">Período de Treinamento</label>
+            <input type="text" id="periodoTreinamento" required placeholder="Selecione no calendário" readonly>
           </div>
-          <div class="resumo-tile t-mint full">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg>
-            <div class="valor" id="statTempoMedio">—</div>
-            <div class="rotulo">Tempo médio de conclusão</div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- COLUNA DIREITA -->
-    <div class="card">
-      <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
-        <div>
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M3 10h18"></path></svg>
-            Tarefas de Engenharia
-          </div>
-          <div class="card-subtitle" style="margin-bottom:0;">Acompanhamento das atividades do setor</div>
-        </div>
-        <div class="d-flex gap-2 align-items-center">
-          <button class="btn btn-outline-navy btn-sm" id="btnImprimir">🖨️ Imprimir pauta</button>
-          <button class="btn btn-outline-navy btn-sm" id="btnAtualizar">↻ Atualizar</button>
-          <span class="cell-muted" id="ultimaAtualizacaoInfo" style="font-size:.72rem;"></span>
-        </div>
-      </div>
-
-      <div class="cat-tabs" id="catTabs"></div>
-
-      <div class="filter-row">
-        <select class="form-select" id="filtroPrioridade">
-          <option value="">Todas as prioridades</option>
-          <option value="Alta">Alta</option>
-          <option value="Média">Média</option>
-          <option value="Baixa">Baixa</option>
-        </select>
-        <input type="text" class="form-control" id="filtroResponsavel" placeholder="Filtrar por responsável…">
-        <select class="form-select" id="filtroAlteradoPor">
-          <option value="">Quem alterou (todos)</option>
-        </select>
-        <select class="form-select" id="filtroPeriodo">
-          <option value="">Alteradas: todas as datas</option>
-          <option value="atual">Alteradas esta semana</option>
-          <option value="anterior">Alteradas semana passada</option>
-        </select>
-        <div class="selecao-info ms-auto" id="selecaoInfo"></div>
-      </div>
-
-      <div style="overflow-x:auto;">
-        <div id="areaConteudo">
-          <div class="loading-state">Carregando tarefas do backend…</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Área exclusiva de impressão (pauta da reunião) -->
-<div id="areaImpressao" class="print-only"></div>
-
-<!-- Modal Login -->
-<div class="modal fade" id="modalLogin" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content" style="border-radius:12px;">
-      <div class="modal-header" style="background:var(--navy); color:#fff; border-radius:12px 12px 0 0;">
-        <h5 class="modal-title">Login</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-2">
-          <label class="field-label">Usuário</label>
-          <select class="form-select" id="loginNome"></select>
-        </div>
-        <div class="mb-2">
-          <label class="field-label">Senha</label>
-          <input type="password" class="form-control" id="loginSenha">
-        </div>
-        <div class="text-danger" style="font-size:.78rem;" id="erroLogin"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-navy btn-sm" id="btnEntrarLogin">Entrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Editar Tarefa -->
-<div class="modal fade" id="modalTarefa" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content" style="border-radius:12px;">
-      <div class="modal-header" style="background:var(--navy); color:#fff; border-radius:12px 12px 0 0;">
-        <h5 class="modal-title" id="modalTituloTarefa">Editar tarefa</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <input type="hidden" id="editId">
-        <div class="mb-2">
-          <label class="field-label">Categoria</label>
-          <select class="form-select" id="editCategoria"></select>
-        </div>
-        <div class="mb-2">
-          <label class="field-label">Atividade</label>
-          <textarea class="form-control" id="editAtividade" rows="2"></textarea>
-        </div>
-        <div class="mb-2">
-          <label class="field-label">Status / observações</label>
-          <textarea class="form-control" id="editStatus" rows="2"></textarea>
-        </div>
-        <div class="row">
-          <div class="col-6 mb-2">
-            <label class="field-label">Prioridade</label>
-            <select class="form-select" id="editPrioridade">
-              <option value="">—</option>
-              <option value="Alta">Alta</option>
-              <option value="Média">Média</option>
-              <option value="Baixa">Baixa</option>
+          <div class="input-field">
+            <label for="status">Status</label>
+            <select id="status">
+              <option value="Pendente">Pendente</option>
+              <option value="Agendado">Agendado</option>
+              <option value="Concluído">Concluído</option>
+              <option value="Cancelado">Cancelado</option>
             </select>
           </div>
-          <div class="col-6 mb-2">
-            <label class="field-label">Responsável</label>
-            <input type="text" class="form-control" id="editResponsavel">
+
+          <div class="checkbox-group">
+            <p>Áreas de Interesse:</p>
+            <div class="checkbox-options">
+              <label class="checkbox-item"><input type="checkbox" id="quadroComando"> Quadro de Comando</label>
+              <label class="checkbox-item"><input type="checkbox" id="manutencaoBombas"> Manutenção de Bombas</label>
+              <label class="checkbox-item"><input type="checkbox" id="bobinagem"> Bobinagem</label>
+              <label class="checkbox-item"><input type="checkbox" id="dimensionamentos"> Dimensionamentos</label>
+              <label class="checkbox-item"><input type="checkbox" id="comercial"> Comercial</label>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-6 mb-2">
-            <label class="field-label">Registro</label>
-            <input type="date" class="form-control" id="editRegistro">
+
+          <div class="input-field full-width">
+            <label for="observacoes">Observações</label>
+            <textarea id="observacoes" placeholder="Informações adicionais (opcional)"></textarea>
           </div>
-          <div class="col-6 mb-2">
-            <label class="field-label">Previsão</label>
-            <input type="date" class="form-control" id="editPrevisao">
-          </div>
-        </div>
-        <div class="text-danger" style="font-size:.78rem;" id="erroEdicao"></div>
+
+          <button type="submit" id="btnSalvar">Cadastrar na Planilha</button>
+        </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-navy btn-sm" id="btnSalvarEdicao">Salvar alterações</button>
+
+      <!-- Calendário -->
+      <div class="calendar-container">
+        <div class="calendar-top-bar">
+          <button type="button" class="today-btn" onclick="irParaHoje()">📅 Hoje</button>
+          <div class="sync-bar">
+            <span class="sync-info">📅 <span id="ultimaAtualizacao">Ainda não sincronizado</span></span>
+            <button type="button" class="sync-btn" id="btnSincronizar" onclick="sincronizarAgora()">🔄 Sincronizar</button>
+          </div>
+        </div>
+        <div class="calendar-body">
+          <div id="inlineCalendar"></div>
+        </div>
       </div>
     </div>
+
+    <!-- Filtro -->
+    <div class="table-toolbar">
+      <div class="toolbar-filtro">
+        <label for="filtroStatus">Filtrar por status:</label>
+        <select id="filtroStatus" onchange="aplicarFiltroStatus()">
+          <option value="todos">Todos</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Agendado">Agendado</option>
+          <option value="Concluído">Concluído</option>
+          <option value="Cancelado">Cancelado</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Tabela -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Empresa</th>
+            <th>Cidade/UF</th>
+            <th>Estagiário</th>
+            <th>E-mail</th>
+            <th>Interesses</th>
+            <th>Período</th>
+            <th>Incluído em</th>
+            <th>Observações</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaCorpo"></tbody>
+      </table>
+    </div>
+
   </div>
-</div>
-
-<!-- Modal Gerenciar Categorias -->
-<div class="modal fade" id="modalCategorias" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content" style="border-radius:12px;">
-      <div class="modal-header" style="background:var(--navy); color:#fff; border-radius:12px 12px 0 0;">
-        <h5 class="modal-title">Gerenciar categorias</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <div class="cat-config" id="listaCategorias"></div>
-        <label class="field-label mt-3">Nova categoria</label>
-        <div class="d-flex gap-2">
-          <input type="text" class="form-control" id="novaCategoriaNome" maxlength="40" placeholder="Ex.: Qualidade">
-          <button type="button" class="btn btn-navy btn-sm" id="btnAdicionarCategoria">Adicionar</button>
-        </div>
-        <div style="font-size:.78rem;min-height:1.2rem;margin-top:.5rem;" id="erroCategorias"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Fechar</button>
-      </div>
-    </div>
   </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-/* ============================================================================
-   ATA ENGENHARIA — FRONTEND (visual alinhado ao Controle de Materiais - Bobinagem)
-   Troque APPS_SCRIPT_URL pelo link da sua própria implantação, se necessário.
-   ============================================================================ */
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxthpqrEry78xKrd5hVnNpcz8UmitVLqs6ND98d68PqaGdUxaLRdll1QCtKgLtapYkQ/exec";
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 
-/* Categorias: a lista oficial vem da aba "Categorias" da planilha (editável pelo botão ⚙ Categorias).
-   Esta lista é só o ponto de partida enquanto o backend ainda não respondeu. */
-const CATEGORIAS_PADRAO = ["GERAL", "SEGURANÇA", "AGENDA MANUTENÇÃO", "ASSUNTOS EM ESPERA", "PRODUTO"];
-let categoriasLista = CATEGORIAS_PADRAO.slice();
-let catEditando = null;
-let catExcluindo = null;
-let catOcupado = false;
+  <script>
+    // Link atualizado da implantação do Apps Script
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRAKILdYzxi3uWRL0bKXVeCaHDSPv7kKS_uLcXDO1TlX8otUgxDOHfY5Et9D_LR9ES/exec";
 
-let tarefasCache = [];
-let categoriaAtiva = "TODAS";
-let selecionadas = new Set();
-let usuarioAtual = null;
-let senhaAtual = null;
-const modalTarefa = new bootstrap.Modal(document.getElementById('modalTarefa'));
-const modalLogin = new bootstrap.Modal(document.getElementById('modalLogin'));
-const modalCategorias = new bootstrap.Modal(document.getElementById('modalCategorias'));
+    const form = document.getElementById('formTreinamento');
+    const tabelaCorpo = document.getElementById('tabelaCorpo');
+    const btnSalvar = document.getElementById('btnSalvar');
 
-/**
- * Faz um fetch e tenta interpretar como JSON, repetindo automaticamente em caso de falha
- * (rede instável, resposta HTML de erro do Google, timeout momentâneo, etc).
- */
-async function fetchJsonComRetry(url, options, tentativas = 3, atrasoMs = 700) {
-  let ultimoErro;
-  for (let i = 0; i < tentativas; i++) {
-    try {
-      const resp = await fetch(url, options);
-      const texto = await resp.text();
-      try {
-        return JSON.parse(texto);
-      } catch (e) {
-        throw new Error('Resposta inválida do servidor (não é JSON). Pode ser instabilidade momentânea do Google.');
+    let datasOcupadas = {};
+    let calendarPicker = null;
+
+    function irParaHoje() {
+      if (calendarPicker) calendarPicker.jumpToDate(new Date());
+    }
+
+    function inicializarCalendario() {
+      calendarPicker = flatpickr("#inlineCalendar", {
+        inline: true,
+        mode: "multiple",
+        conjunction: ", ",
+        locale: "pt",
+        dateFormat: "d/m/Y",
+        onChange: function(selectedDates, dateStr) {
+          document.getElementById('periodoTreinamento').value = dateStr;
+        },
+        onDayCreate: function(dObj, dStr, fp, dayElem) {
+          const ano = dayElem.dateObj.getFullYear();
+          const mes = String(dayElem.dateObj.getMonth() + 1).padStart(2, '0');
+          const dia = String(dayElem.dateObj.getDate()).padStart(2, '0');
+          const dataIso = `${ano}-${mes}-${dia}`;
+
+          if (datasOcupadas[dataIso]) {
+            const registros = datasOcupadas[dataIso];
+            
+            // Verifica se todos os registros do dia estão concluídos
+            const todosConcluidos = Array.isArray(registros) && registros.every(r => {
+              const statusStr = typeof r === 'object' ? (r.status || '') : '';
+              const st = statusStr.toString().trim().toLowerCase();
+              return st === 'concluído' || st === 'concluido';
+            });
+
+            const detalhesTool = Array.isArray(registros) 
+              ? registros.map(r => typeof r === 'object' ? `${r.empresa} (${r.status})` : r).join(' / ')
+              : registros;
+
+            if (todosConcluidos) {
+              dayElem.classList.add("dia-concluido");
+              dayElem.title = `Concluído: ${detalhesTool}`;
+            } else {
+              dayElem.classList.add("dia-ocupado");
+              dayElem.title = `Agendado: ${detalhesTool}`;
+            }
+          }
+        }
+      });
+    }
+
+    function renderizarDados(data) {
+      if (data.datasOcupadas) {
+        datasOcupadas = data.datasOcupadas;
+        if (calendarPicker) calendarPicker.destroy();
+        inicializarCalendario();
       }
-    } catch (err) {
-      ultimoErro = err;
-      if (i < tentativas - 1) {
-        await new Promise(r => setTimeout(r, atrasoMs));
+
+      if (data.historico && data.historico.length > 0) {
+        tabelaCorpo.innerHTML = "";
+        data.historico.slice().reverse().forEach(item => adicionarLinhaTabela(item));
       }
     }
-  }
-  throw ultimoErro;
-}
 
-/* ---------------- Cache local (mostra dados antigos instantaneamente enquanto atualiza) ---------------- */
+    function carregarDadosPlanilha() {
+      localStorage.removeItem('treinamentos_cache');
 
-const CACHE_KEY = 'ataEngenharia_cache_v1';
-
-function salvarCacheLocal(tarefas, categorias) {
-  try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify({ tarefas, categorias, timestamp: new Date().toISOString() }));
-  } catch (err) {
-    // Se o navegador bloquear localStorage (ex: modo privado), simplesmente não há cache — sem problema.
-  }
-}
-
-function carregarCacheLocal() {
-  try {
-    const bruto = localStorage.getItem(CACHE_KEY);
-    if (!bruto) return null;
-    const dado = JSON.parse(bruto);
-    if (!dado || !Array.isArray(dado.tarefas)) return null;
-    return dado;
-  } catch (err) {
-    return null;
-  }
-}
-
-function formatarHoraCache(isoTimestamp) {
-  try {
-    return new Date(isoTimestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  } catch (err) {
-    return '';
-  }
-}
-
-/* ---------------- Categorias ---------------- */
-
-const PALAVRAS_MINUSCULAS = ['de', 'da', 'do', 'das', 'dos', 'em', 'e'];
-
-/** Nome guardado (MAIÚSCULAS) -> nome para exibir (ex.: "ASSUNTOS EM ESPERA" -> "Assuntos em Espera"). */
-function rotuloCategoria(c) {
-  return String(c || '').toLowerCase().split(' ').map((p, i) =>
-    (i > 0 && PALAVRAS_MINUSCULAS.indexOf(p) !== -1) ? p : p.charAt(0).toUpperCase() + p.slice(1)
-  ).join(' ');
-}
-
-function normalizarNomeCategoria(n) {
-  return String(n || '').replace(/\s+/g, ' ').trim().toUpperCase();
-}
-
-function preencherSelectCategoria(id) {
-  const sel = document.getElementById(id);
-  const atual = sel.value;
-  sel.innerHTML = categoriasLista.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(rotuloCategoria(c))}</option>`).join('');
-  if (atual && categoriasLista.indexOf(atual) !== -1) sel.value = atual;
-}
-
-/** Recebe a lista oficial do backend e atualiza abas, formulários e a janela de gerenciamento. */
-function aplicarCategorias(lista) {
-  if (Array.isArray(lista) && lista.length) categoriasLista = lista.slice();
-  preencherSelectCategoria('campoCategoria');
-  preencherSelectCategoria('editCategoria');
-  if (categoriaAtiva !== 'TODAS' && categoriaAtiva !== 'CONCLUIDAS' && categoriasLista.indexOf(categoriaAtiva) === -1) {
-    categoriaAtiva = 'TODAS';
-  }
-}
-
-function montarTabs() {
-  const el = document.getElementById('catTabs');
-  const abas = [{ valor: 'TODAS', label: 'Todas' }]
-    .concat(categoriasLista.map(c => ({ valor: c, label: rotuloCategoria(c) })))
-    .concat([{ valor: 'CONCLUIDAS', label: 'Concluídas' }]);
-  el.innerHTML = abas.map(c => {
-    let qtd;
-    if (c.valor === 'TODAS') qtd = tarefasCache.filter(t => t.concluida !== 'SIM').length;
-    else if (c.valor === 'CONCLUIDAS') qtd = tarefasCache.filter(t => t.concluida === 'SIM').length;
-    else qtd = tarefasCache.filter(t => t.categoria === c.valor && t.concluida !== 'SIM').length;
-    return `<button class="cat-tab ${categoriaAtiva === c.valor ? 'active' : ''}" data-cat="${escapeHtml(c.valor)}">
-      ${escapeHtml(c.label)}<span class="count">${qtd}</span>
-    </button>`;
-  }).join('') + `<button class="cat-tab cat-config-btn" id="btnGerenciarCategorias" title="Incluir, renomear ou excluir categorias">⚙ Categorias</button>`;
-  el.querySelectorAll('.cat-tab[data-cat]').forEach(b => {
-    b.addEventListener('click', () => { categoriaAtiva = b.dataset.cat; renderizar(); });
-  });
-  document.getElementById('btnGerenciarCategorias').addEventListener('click', abrirGerenciarCategorias);
-}
-
-function mensagemCategorias(texto, ehErro) {
-  const el = document.getElementById('erroCategorias');
-  el.textContent = texto || '';
-  el.style.color = ehErro ? '#C0392B' : 'var(--muted)';
-}
-
-function abrirGerenciarCategorias() {
-  if (!exigirLogin()) return;
-  catEditando = null;
-  catExcluindo = null;
-  document.getElementById('novaCategoriaNome').value = '';
-  mensagemCategorias('');
-  renderListaCategorias();
-  modalCategorias.show();
-}
-
-function qtdTarefasDaCategoria(nome) {
-  return tarefasCache.filter(t => t.categoria === nome).length;
-}
-
-function renderListaCategorias() {
-  const el = document.getElementById('listaCategorias');
-  el.innerHTML = categoriasLista.map(c => {
-    const nomeAttr = escapeHtml(c);
-    const qtd = qtdTarefasDaCategoria(c);
-    if (catEditando === c) {
-      return `<div class="cat-row">
-        <input type="text" class="form-control cat-input-renomear" maxlength="40" value="${nomeAttr}" data-nome="${nomeAttr}">
-        <button type="button" class="btn btn-navy btn-sm" data-acao="salvar-ren" data-nome="${nomeAttr}">Salvar</button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" data-acao="cancelar" data-nome="${nomeAttr}">Cancelar</button>
-      </div>`;
+      return fetch(GOOGLE_SCRIPT_URL + "?t=" + new Date().getTime())
+        .then(res => res.json())
+        .then(data => {
+          localStorage.setItem('treinamentos_cache', JSON.stringify(data));
+          renderizarDados(data);
+          atualizarHorarioSincronizacao();
+        })
+        .catch(err => {
+          console.error("Erro ao carregar dados:", err);
+          document.getElementById('ultimaAtualizacaoCabecalho').textContent = 'Falha ao carregar';
+        });
     }
-    if (catExcluindo === c) {
-      const outras = categoriasLista.filter(x => x !== c);
-      if (outras.length === 0) {
-        return `<div class="cat-row confirmando">
-          <div class="cat-aviso">Não é possível excluir a única categoria existente.</div>
-          <button type="button" class="btn btn-outline-secondary btn-sm" data-acao="cancelar" data-nome="${nomeAttr}">Voltar</button>
-        </div>`;
+
+    function atualizarHorarioSincronizacao() {
+      const agora = new Date();
+      const hora = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('ultimaAtualizacao').textContent = `Atualizado às ${hora}`;
+      document.getElementById('ultimaAtualizacaoCabecalho').textContent = 'Atualizado em ' + agora.toLocaleString('pt-BR');
+    }
+
+    function sincronizarAgora() {
+      const btn = document.getElementById('btnSincronizar');
+      const textoOriginal = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '🔄 Sincronizando...';
+
+      carregarDadosPlanilha().finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = textoOriginal;
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      inicializarCalendario();
+      carregarDadosPlanilha();
+    });
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      btnSalvar.disabled = true;
+      btnSalvar.textContent = "Enviando dados para a planilha...";
+
+      const empresaNome = document.getElementById('empresa').value;
+      const dataFormatada = document.getElementById('periodoTreinamento').value;
+
+      // Data/hora em que o registro está sendo incluído (não é o período do treinamento)
+      const agora = new Date();
+      const dataInclusaoFormatada = agora.toLocaleDateString('pt-BR');
+
+      const dados = {
+        empresa: empresaNome,
+        cidade: document.getElementById('cidade').value,
+        uf: document.getElementById('uf').value.toUpperCase(),
+        estagiario: document.getElementById('estagiario').value,
+        email: document.getElementById('email').value,
+        periodoTreinamento: dataFormatada,
+        status: document.getElementById('status').value,
+        quadroComando: document.getElementById('quadroComando').checked,
+        manutencaoBombas: document.getElementById('manutencaoBombas').checked,
+        bobinagem: document.getElementById('bobinagem').checked,
+        dimensionamentos: document.getElementById('dimensionamentos').checked,
+        comercial: document.getElementById('comercial').checked,
+        observacoes: document.getElementById('observacoes').value,
+        dataInclusao: dataInclusaoFormatada
+      };
+
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dados)
+      })
+      .then(() => {
+        form.reset();
+        if (calendarPicker) calendarPicker.clear();
+        alert("Registro adicionado com sucesso!");
+        setTimeout(carregarDadosPlanilha, 1200);
+      })
+      .catch(error => {
+        console.error('Erro:', error);
+        alert("Ocorreu um erro ao enviar os dados.");
+      })
+      .finally(() => {
+        btnSalvar.disabled = false;
+        btnSalvar.textContent = "Cadastrar na Planilha";
+      });
+    });
+
+    function alterarStatus(selectElem, item) {
+      const novoStatus = selectElem.value;
+      selectElem.className = `status-select ${novoStatus}`;
+      selectElem.closest('tr').dataset.status = novoStatus;
+      aplicarFiltroStatus();
+
+      const payload = {
+        action: "updateStatus",
+        linha: item.linha || null,
+        empresa: item.empresa,
+        estagiario: item.estagiario,
+        novoStatus: novoStatus
+      };
+
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        setTimeout(carregarDadosPlanilha, 1000);
+      })
+      .catch(err => console.error("Erro ao alterar status:", err));
+    }
+
+    function ajustarAlturaTextarea(el) {
+      el.style.height = 'auto';
+      el.style.height = el.scrollHeight + 'px';
+    }
+
+    function salvarObservacao(textareaElem, item) {
+      const novaObservacao = textareaElem.value;
+
+      // Evita chamada ao servidor se nada mudou
+      if (novaObservacao === (item.observacoes || '')) return;
+
+      const payload = {
+        action: "updateObservacoes",
+        linha: item.linha || null,
+        empresa: item.empresa,
+        estagiario: item.estagiario,
+        novaObservacao: novaObservacao
+      };
+
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        item.observacoes = novaObservacao;
+        textareaElem.classList.add('salvo');
+      })
+      .catch(err => console.error("Erro ao salvar observação:", err));
+    }
+
+    function abrirEditorPeriodo(inputElem, item) {
+      inputElem.classList.remove('salvo');
+
+      // Se já existe uma instância de calendário para este campo, apenas reabre
+      if (inputElem._flatpickrPeriodo) {
+        inputElem._flatpickrPeriodo.open();
+        return;
       }
-      if (qtd > 0) {
-        return `<div class="cat-row confirmando">
-          <div class="cat-aviso"><b>${escapeHtml(rotuloCategoria(c))}</b> tem ${qtd} tarefa(s). Para onde elas devem ir? (nenhuma tarefa será apagada)</div>
-          <select class="form-select cat-destino">${outras.map(o => `<option value="${escapeHtml(o)}">${escapeHtml(rotuloCategoria(o))}</option>`).join('')}</select>
-          <button type="button" class="btn btn-danger btn-sm" data-acao="confirmar-exc" data-nome="${nomeAttr}">Mover e excluir</button>
-          <button type="button" class="btn btn-outline-secondary btn-sm" data-acao="cancelar" data-nome="${nomeAttr}">Cancelar</button>
-        </div>`;
+
+      const datasIniciais = (item.periodoTreinamento || '')
+        .split(',')
+        .map(s => s.trim())
+        .filter(Boolean);
+
+      const fp = flatpickr(inputElem, {
+        mode: "multiple",
+        conjunction: ", ",
+        locale: "pt",
+        dateFormat: "d/m/Y",
+        allowInput: false,
+        defaultDate: datasIniciais,
+        appendTo: document.body, // evita que o calendário seja cortado pela rolagem da tabela
+        onClose: function() {
+          salvarPeriodo(inputElem, item);
+        }
+      });
+
+      inputElem._flatpickrPeriodo = fp;
+      fp.open();
+    }
+
+    function salvarPeriodo(inputElem, item) {
+      const novoPeriodo = inputElem.value;
+
+      // Evita chamada ao servidor se nada mudou
+      if (novoPeriodo === (item.periodoTreinamento || '')) return;
+
+      const payload = {
+        action: "updatePeriodo",
+        linha: item.linha || null,
+        empresa: item.empresa,
+        estagiario: item.estagiario,
+        novoPeriodo: novoPeriodo
+      };
+
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        item.periodoTreinamento = novoPeriodo;
+        inputElem.classList.add('salvo');
+        // Recarrega para atualizar os destaques do calendário com a nova data
+        setTimeout(carregarDadosPlanilha, 1000);
+      })
+      .catch(err => console.error("Erro ao salvar período:", err));
+    }
+
+    function adicionarLinhaTabela(item, noTopo = false) {
+      const tr = document.createElement('tr');
+      
+      function isMarcado(valor) {
+        if (valor === true) return true;
+        if (typeof valor === 'string') {
+          const v = valor.trim().toUpperCase();
+          return v === "X" || v === "TRUE";
+        }
+        return false;
       }
-      return `<div class="cat-row confirmando">
-        <div class="cat-aviso">Excluir a categoria <b>${escapeHtml(rotuloCategoria(c))}</b>? Ela não tem tarefas.</div>
-        <button type="button" class="btn btn-danger btn-sm" data-acao="confirmar-exc" data-nome="${nomeAttr}">Excluir</button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" data-acao="cancelar" data-nome="${nomeAttr}">Cancelar</button>
-      </div>`;
+
+      const interesses = [];
+      if (isMarcado(item.quadroComando)) interesses.push("Quadro de Comando");
+      if (isMarcado(item.manutencaoBombas)) interesses.push("Manutenção");
+      if (isMarcado(item.bobinagem)) interesses.push("Bobinagem");
+      if (isMarcado(item.dimensionamentos)) interesses.push("Dimensionamentos");
+      if (isMarcado(item.comercial)) interesses.push("Comercial");
+
+      const currentStatus = item.status || "Pendente";
+      tr.dataset.status = currentStatus;
+      const cidadeUf = (item.cidade || '') + (item.uf ? ' / ' + item.uf : '');
+      const observacaoTexto = item.observacoes || '';
+
+      tr.innerHTML = `
+        <td>${item.empresa || '-'}</td>
+        <td>${cidadeUf || '-'}</td>
+        <td>${item.estagiario || '-'}</td>
+        <td>${item.email || '-'}</td>
+        <td>${interesses.join(', ') || '-'}</td>
+        <td>
+          <input type="text" class="obs-input" readonly value="${(item.periodoTreinamento || '').replace(/"/g, '&quot;')}"
+            onclick="abrirEditorPeriodo(this, ${JSON.stringify(item).replace(/"/g, '&quot;')})">
+        </td>
+        <td>${item.dataInclusao || '-'}</td>
+        <td>
+          <textarea class="obs-input" rows="1"
+            oninput="ajustarAlturaTextarea(this)"
+            onfocus="this.classList.remove('salvo')"
+            onblur="salvarObservacao(this, ${JSON.stringify(item).replace(/"/g, '&quot;')})">${observacaoTexto}</textarea>
+        </td>
+        <td>
+          <select class="status-select ${currentStatus}" onchange="alterarStatus(this, ${JSON.stringify(item).replace(/"/g, '&quot;')})">
+            <option value="Pendente" ${currentStatus === "Pendente" ? "selected" : ""}>Pendente</option>
+            <option value="Agendado" ${currentStatus === "Agendado" ? "selected" : ""}>Agendado</option>
+            <option value="Concluído" ${currentStatus === "Concluído" ? "selected" : ""}>Concluído</option>
+            <option value="Cancelado" ${currentStatus === "Cancelado" ? "selected" : ""}>Cancelado</option>
+          </select>
+        </td>
+      `;
+
+      if (noTopo) {
+        tabelaCorpo.prepend(tr);
+      } else {
+        tabelaCorpo.appendChild(tr);
+      }
+
+      const textareaObs = tr.querySelector('textarea.obs-input');
+      if (textareaObs) ajustarAlturaTextarea(textareaObs);
+
+      aplicarFiltroStatus();
     }
-    return `<div class="cat-row">
-      <span class="cat-nome">${escapeHtml(rotuloCategoria(c))}</span>
-      <span class="cat-qtd">${qtd} tarefa(s)</span>
-      <button type="button" class="icon-btn" title="Renomear" data-acao="renomear" data-nome="${nomeAttr}">✎</button>
-      <button type="button" class="icon-btn" title="Excluir" data-acao="excluir" data-nome="${nomeAttr}">🗑</button>
-    </div>`;
-  }).join('');
-  const inp = el.querySelector('.cat-input-renomear');
-  if (inp) { inp.focus(); inp.select(); }
-}
 
-/** Executa uma ação de categoria no backend, bloqueando cliques duplos e recarregando a lista no fim. */
-async function executarAcaoCategoria(action, body, aposSucesso) {
-  if (catOcupado) return;
-  if (!exigirLogin()) return;
-  catOcupado = true;
-  mensagemCategorias('Salvando…', false);
-  try {
-    await chamarBackend(action, { ...body, usuario: usuarioAtual, senha: senhaAtual });
-    if (aposSucesso) aposSucesso();
-    catEditando = null;
-    catExcluindo = null;
-    await carregarTarefas(false);
-    renderListaCategorias();
-    mensagemCategorias('Categorias atualizadas.', false);
-  } catch (err) {
-    mensagemCategorias(err.message, true);
-  } finally {
-    catOcupado = false;
-  }
-}
-
-document.getElementById('listaCategorias').addEventListener('click', (ev) => {
-  const btn = ev.target.closest('[data-acao]');
-  if (!btn) return;
-  const nome = btn.dataset.nome;
-  const acao = btn.dataset.acao;
-  mensagemCategorias('');
-  if (acao === 'renomear') { catEditando = nome; catExcluindo = null; renderListaCategorias(); }
-  else if (acao === 'excluir') { catExcluindo = nome; catEditando = null; renderListaCategorias(); }
-  else if (acao === 'cancelar') { catEditando = null; catExcluindo = null; renderListaCategorias(); }
-  else if (acao === 'salvar-ren') {
-    const novo = btn.closest('.cat-row').querySelector('.cat-input-renomear').value;
-    const novoNorm = normalizarNomeCategoria(novo);
-    executarAcaoCategoria('renomearCategoria', { atual: nome, novo }, () => {
-      if (categoriaAtiva === nome) categoriaAtiva = novoNorm;
-    });
-  }
-  else if (acao === 'confirmar-exc') {
-    const sel = btn.closest('.cat-row').querySelector('.cat-destino');
-    const destino = sel ? sel.value : '';
-    executarAcaoCategoria('excluirCategoria', { nome, destino }, () => {
-      if (categoriaAtiva === nome) categoriaAtiva = 'TODAS';
-    });
-  }
-});
-
-document.getElementById('listaCategorias').addEventListener('keydown', (ev) => {
-  if (ev.key === 'Enter' && ev.target.classList.contains('cat-input-renomear')) {
-    ev.preventDefault();
-    ev.target.closest('.cat-row').querySelector('[data-acao="salvar-ren"]').click();
-  } else if (ev.key === 'Escape' && ev.target.classList.contains('cat-input-renomear')) {
-    ev.stopPropagation();
-    catEditando = null;
-    renderListaCategorias();
-  }
-});
-
-async function adicionarCategoria() {
-  const campo = document.getElementById('novaCategoriaNome');
-  const nome = campo.value;
-  if (!normalizarNomeCategoria(nome)) { mensagemCategorias('Informe o nome da nova categoria.', true); return; }
-  await executarAcaoCategoria('criarCategoria', { nome }, () => { campo.value = ''; });
-}
-document.getElementById('btnAdicionarCategoria').addEventListener('click', adicionarCategoria);
-document.getElementById('novaCategoriaNome').addEventListener('keydown', (ev) => {
-  if (ev.key === 'Enter') { ev.preventDefault(); adicionarCategoria(); }
-});
-
-/**
- * usarCache = true (abertura da página): mostra na hora os últimos dados salvos e atualiza em seguida.
- * usarCache = false (depois de salvar/finalizar/reabrir ou no botão Atualizar): nunca mostra dados antigos.
- */
-async function carregarTarefas(usarCache = true) {
-  const cache = usarCache ? carregarCacheLocal() : null;
-  if (cache) {
-    tarefasCache = cache.tarefas;
-    aplicarCategorias(cache.categorias);
-    renderizar();
-    document.getElementById('ultimaAtualizacaoInfo').textContent =
-      'Mostrando dados salvos de ' + formatarHoraCache(cache.timestamp) + ' — atualizando…';
-  } else if (!usarCache && tarefasCache.length) {
-    document.getElementById('ultimaAtualizacaoInfo').textContent = 'Atualizando…';
-  } else {
-    document.getElementById('areaConteudo').innerHTML = '<div class="loading-state">Carregando tarefas do backend…</div>';
-  }
-
-  try {
-    const json = await fetchJsonComRetry(APPS_SCRIPT_URL + "?action=listar");
-    if (!json.ok) throw new Error(json.error || "Erro desconhecido do backend.");
-    tarefasCache = json.data;
-    aplicarCategorias(json.categorias);
-    renderizar();
-    salvarCacheLocal(tarefasCache, categoriasLista);
-    const agora = new Date();
-    const hora = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    document.getElementById('ultimaAtualizacaoInfo').textContent = 'Atualizado às ' + hora;
-  } catch (err) {
-    if (cache) {
-      // Mantém os dados antigos na tela; só avisa discretamente que não conseguiu atualizar agora.
-      document.getElementById('ultimaAtualizacaoInfo').textContent =
-        'Não foi possível atualizar agora — mostrando dados de ' + formatarHoraCache(cache.timestamp);
-    } else if (!usarCache && tarefasCache.length) {
-      document.getElementById('ultimaAtualizacaoInfo').textContent =
-        'Não foi possível atualizar agora — os dados na tela podem estar desatualizados.';
-    } else {
-      document.getElementById('areaConteudo').innerHTML =
-        '<div class="empty-state">Não foi possível carregar as tarefas.<br>' +
-        '<span style="font-size:.75rem;">' + escapeHtml(err.message) + '</span><br><br>' +
-        'Confira a URL do Apps Script em <code>APPS_SCRIPT_URL</code> e o acesso "Qualquer pessoa" na implantação.</div>';
+    function aplicarFiltroStatus() {
+      const filtro = document.getElementById('filtroStatus').value;
+      Array.from(tabelaCorpo.children).forEach(tr => {
+        const mostrar = (filtro === 'todos') || (tr.dataset.status === filtro);
+        tr.style.display = mostrar ? '' : 'none';
+      });
     }
-  }
-}
-
-function aplicarFiltros(lista) {
-  const prio = document.getElementById('filtroPrioridade').value;
-  const resp = document.getElementById('filtroResponsavel').value.trim().toLowerCase();
-  const alteradoPor = document.getElementById('filtroAlteradoPor').value;
-  const periodo = document.getElementById('filtroPeriodo').value;
-
-  return lista.filter(t => {
-    if (categoriaAtiva === 'CONCLUIDAS') {
-      if (t.concluida !== 'SIM') return false;
-    } else {
-      if (t.concluida === 'SIM') return false;
-      if (categoriaAtiva !== 'TODAS' && t.categoria !== categoriaAtiva) return false;
-    }
-    if (prio && t.prioridade !== prio) return false;
-    if (resp && !(t.responsavel || '').toLowerCase().includes(resp)) return false;
-    if (alteradoPor && t.alteradoPor !== alteradoPor) return false;
-    if (periodo) {
-      const d = paraDataHora(t.ultimaAtualizacao);
-      if (!d) return false;
-      if (periodo === 'atual' && (d < inicioSemana() || d > fimSemana())) return false;
-      if (periodo === 'anterior' && (d < inicioSemanaAnterior() || d > fimSemanaAnterior())) return false;
-    }
-    return true;
-  });
-}
-
-function renderizar() {
-  montarTabs();
-
-  const total = tarefasCache.length;
-  const concluidas = tarefasCache.filter(t => t.concluida === 'SIM').length;
-  const abertas = total - concluidas;
-  const atrasadas = tarefasCache.filter(t => (t.situacao || '').startsWith('Atrasado')).length;
-  document.getElementById('statTotal').textContent = total;
-  document.getElementById('statAbertas').textContent = abertas;
-  document.getElementById('statAtrasadas').textContent = atrasadas;
-  document.getElementById('statConcluidas').textContent = concluidas;
-  const tempoMedio = tempoMedioConclusao();
-  document.getElementById('statTempoMedio').textContent = tempoMedio !== null ? tempoMedio + ' dia(s)' : '—';
-
-  const filtradas = aplicarFiltros(tarefasCache);
-  const area = document.getElementById('areaConteudo');
-
-  if (filtradas.length === 0) {
-    area.innerHTML = '<div class="empty-state">Nenhuma tarefa encontrada com esses filtros.</div>';
-    return;
-  }
-
-  area.innerHTML = `
-    <table class="tarefas-table">
-      <thead>
-        <tr>
-          <th style="width:34px;"><input type="checkbox" class="chk-select" id="checkAllVisible" title="Selecionar todas as visíveis"></th>
-          <th>Registro</th>
-          <th>Categoria</th>
-          <th>Prioridade</th>
-          <th>Atividade</th>
-          <th>Responsável</th>
-          <th>Previsão</th>
-          <th>Situação</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        ${filtradas.map(renderLinha).join('')}
-      </tbody>
-    </table>`;
-
-  area.querySelectorAll('.btn-editar').forEach(b => b.addEventListener('click', () => abrirEdicao(b.dataset.id)));
-  area.querySelectorAll('.btn-finalizar').forEach(b => b.addEventListener('click', () => finalizarTarefa(b.dataset.id)));
-  area.querySelectorAll('.btn-reabrir').forEach(b => b.addEventListener('click', () => reabrirTarefa(b.dataset.id)));
-  area.querySelectorAll('.chk-row').forEach(c => c.addEventListener('change', () => {
-    if (c.checked) selecionadas.add(c.dataset.id); else selecionadas.delete(c.dataset.id);
-    atualizarSelecaoInfo();
-  }));
-  const checkAll = document.getElementById('checkAllVisible');
-  checkAll.checked = filtradas.length > 0 && filtradas.every(t => selecionadas.has(String(t.id)));
-  checkAll.addEventListener('change', () => {
-    filtradas.forEach(t => {
-      if (checkAll.checked) selecionadas.add(String(t.id)); else selecionadas.delete(String(t.id));
-    });
-    renderizar();
-  });
-  atualizarSelecaoInfo();
-}
-
-function atualizarSelecaoInfo() {
-  const el = document.getElementById('selecaoInfo');
-  if (selecionadas.size === 0) {
-    el.innerHTML = 'Nenhuma selecionada — a pauta impressa trará tudo';
-  } else {
-    el.innerHTML = `${selecionadas.size} selecionada(s) para a pauta <button id="btnLimparSelecao" type="button">limpar</button>`;
-    document.getElementById('btnLimparSelecao').addEventListener('click', () => {
-      selecionadas.clear();
-      renderizar();
-    });
-  }
-}
-
-/** Média de dias entre Registro e Data de Finalização, só das tarefas que têm as duas datas preenchidas. */
-function tempoMedioConclusao() {
-  const concluidas = tarefasCache.filter(t => t.concluida === 'SIM' && t.registro && t.dataFinalizacao);
-  if (concluidas.length === 0) return null;
-  const soma = concluidas.reduce((acc, t) => {
-    const r = paraData(t.registro);
-    const f = paraData(t.dataFinalizacao);
-    if (!r || !f) return acc;
-    return acc + Math.round((f - r) / 86400000);
-  }, 0);
-  return Math.round(soma / concluidas.length);
-}
-
-function pillPrioridade(p) {
-  if (p === 'Alta') return `<span class="pill pill-red">Alta</span>`;
-  if (p === 'Média') return `<span class="pill pill-amber">Média</span>`;
-  if (p === 'Baixa') return `<span class="pill pill-green">Baixa</span>`;
-  return `<span class="pill pill-gray">—</span>`;
-}
-
-function pillCategoria(cat) {
-  const fixas = {
-    "GERAL": "pill-gray", "SEGURANÇA": "pill-red", "AGENDA MANUTENÇÃO": "pill-amber",
-    "ASSUNTOS EM ESPERA": "pill-purple", "PRODUTO": "pill-blue"
-  };
-  const curtos = { "AGENDA MANUTENÇÃO": "Agenda Manut.", "ASSUNTOS EM ESPERA": "Em espera" };
-  let classe = fixas[cat];
-  if (!classe) {
-    // categorias criadas pelo usuário: cor estável a partir do nome
-    const paleta = ["pill-mint", "pill-blue", "pill-purple", "pill-amber"];
-    let h = 0;
-    for (let i = 0; i < String(cat).length; i++) h = (h * 31 + String(cat).charCodeAt(i)) >>> 0;
-    classe = paleta[h % paleta.length];
-  }
-  return `<span class="pill ${classe}">${escapeHtml(curtos[cat] || rotuloCategoria(cat) || 'Sem categoria')}</span>`;
-}
-
-function pillSituacao(sit) {
-  if (!sit) return `<span class="pill pill-gray">—</span>`;
-  if (sit.startsWith('Atrasado')) return `<span class="pill pill-red">${escapeHtml(sit)}</span>`;
-  if (sit === 'Concluída') return `<span class="pill pill-green">Concluída</span>`;
-  if (sit === 'Encerra hoje') return `<span class="pill pill-amber">Encerra hoje</span>`;
-  if (sit.startsWith('Faltam')) return `<span class="pill pill-mint">${escapeHtml(sit)}</span>`;
-  return `<span class="pill pill-gray">${escapeHtml(sit)}</span>`;
-}
-
-function renderLinha(t) {
-  const marcada = selecionadas.has(String(t.id));
-  return `
-    <tr class="${t.concluida === 'SIM' ? 'concluida' : ''}">
-      <td><input type="checkbox" class="chk-select chk-row" data-id="${t.id}" ${marcada ? 'checked' : ''}></td>
-      <td class="cell-muted">
-        ${escapeHtml(t.registro || '—')}
-        ${t.ultimaAtualizacao ? `<div class="cell-sub">alterado em ${escapeHtml(t.ultimaAtualizacao)}${t.alteradoPor ? ' por ' + escapeHtml(t.alteradoPor) : ''}</div>` : ''}
-      </td>
-      <td>${pillCategoria(t.categoria)}</td>
-      <td>${pillPrioridade(t.prioridade)}</td>
-      <td class="atividade-cell">
-        <div class="atividade-title">${escapeHtml(t.atividade)}</div>
-        ${t.status ? `<div class="atividade-status">${escapeHtml(t.status)}</div>` : ''}
-      </td>
-      <td class="cell-muted">${escapeHtml(t.responsavel || '—')}</td>
-      <td class="cell-muted">${escapeHtml(t.previsao || '—')}</td>
-      <td>${pillSituacao(t.situacao)}</td>
-      <td>
-        <div class="d-flex gap-1">
-          <button class="icon-btn btn-editar" data-id="${t.id}" title="Editar">✎</button>
-          ${t.concluida !== 'SIM'
-            ? `<button class="icon-btn finalizar btn-finalizar" data-id="${t.id}" title="Finalizar">✓</button>`
-            : `<button class="icon-btn btn-reabrir" data-id="${t.id}" title="Reabrir">↺</button>`}
-        </div>
-      </td>
-    </tr>`;
-}
-
-function escapeHtml(str) {
-  if (str === null || str === undefined) return '';
-  return String(str)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-}
-
-function paraInputDate(brDate) {
-  if (!brDate || !brDate.includes('/')) return '';
-  const [d, m, y] = brDate.split('/');
-  return `${y}-${m}-${d}`;
-}
-function paraDataBR(inputDate) {
-  if (!inputDate) return '';
-  const [y, m, d] = inputDate.split('-');
-  return `${d}/${m}/${y}`;
-}
-
-async function chamarBackend(action, body) {
-  const json = await fetchJsonComRetry(APPS_SCRIPT_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ action, ...body })
-  });
-  if (!json.ok) throw new Error(json.error || 'Erro desconhecido do backend.');
-  return json.data;
-}
-
-/* ---------------- Login ---------------- */
-
-function renderizarAreaUsuario() {
-  const el = document.getElementById('areaUsuario');
-  if (usuarioAtual) {
-    el.innerHTML = `<span class="usuario-logado">👤 ${escapeHtml(usuarioAtual)} <span class="sair" id="btnSair">sair</span></span>`;
-    document.getElementById('btnSair').addEventListener('click', () => {
-      usuarioAtual = null;
-      senhaAtual = null;
-      renderizarAreaUsuario();
-    });
-  } else {
-    el.innerHTML = `<button class="btn btn-login btn-sm" id="btnAbrirLogin">👤 Login</button>`;
-    document.getElementById('btnAbrirLogin').addEventListener('click', abrirLogin);
-  }
-}
-
-async function abrirLogin() {
-  const select = document.getElementById('loginNome');
-  document.getElementById('erroLogin').textContent = '';
-  document.getElementById('loginSenha').value = '';
-  select.innerHTML = '<option>Carregando…</option>';
-  modalLogin.show();
-  try {
-    const json = await fetchJsonComRetry(APPS_SCRIPT_URL + "?action=usuarios");
-    if (!json.ok) throw new Error(json.error);
-    select.innerHTML = json.data.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('');
-  } catch (err) {
-    select.innerHTML = '<option value="">Não foi possível carregar usuários</option>';
-  }
-}
-
-/** Popula o filtro "Quem alterou" com os mesmos nomes exatos usados no login, evitando divergência de texto. */
-async function carregarOpcoesFiltroUsuario() {
-  try {
-    const json = await fetchJsonComRetry(APPS_SCRIPT_URL + "?action=usuarios");
-    if (!json.ok) return;
-    const select = document.getElementById('filtroAlteradoPor');
-    const valorAtual = select.value;
-    select.innerHTML = '<option value="">Quem alterou (todos)</option>' +
-      json.data.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('');
-    select.value = valorAtual;
-  } catch (err) {
-    // mantém só a opção "todos" se a busca falhar
-  }
-}
-
-document.getElementById('btnEntrarLogin').addEventListener('click', async () => {
-  const nome = document.getElementById('loginNome').value;
-  const senha = document.getElementById('loginSenha').value;
-  const erroEl = document.getElementById('erroLogin');
-  erroEl.textContent = '';
-  if (!nome || !senha) { erroEl.textContent = 'Selecione o usuário e informe a senha.'; return; }
-  try {
-    const data = await chamarBackend('validarLogin', { usuario: nome, senha });
-    if (!data.valido) { erroEl.textContent = 'Usuário ou senha inválidos.'; return; }
-    usuarioAtual = nome;
-    senhaAtual = senha;
-    renderizarAreaUsuario();
-    modalLogin.hide();
-  } catch (err) {
-    erroEl.textContent = err.message;
-  }
-});
-
-/** Garante que há um usuário logado antes de uma ação protegida; se não houver, abre o login. */
-function exigirLogin() {
-  if (usuarioAtual) return true;
-  alert('Faça login antes de criar, editar ou finalizar tarefas.');
-  abrirLogin();
-  return false;
-}
-
-renderizarAreaUsuario();
-
-/* ---------------- Criar (formulário fixo na coluna esquerda) ---------------- */
-
-document.getElementById('campoRegistro').value = new Date().toISOString().slice(0, 10);
-
-document.getElementById('btnRegistrar').addEventListener('click', async () => {
-  if (!exigirLogin()) return;
-  const erroEl = document.getElementById('erroFormulario');
-  erroEl.textContent = '';
-  const atividade = document.getElementById('campoAtividade').value.trim();
-  if (!atividade) { erroEl.textContent = 'Descreva a atividade antes de registrar.'; return; }
-
-  const tarefa = {
-    categoria: document.getElementById('campoCategoria').value,
-    atividade,
-    status: document.getElementById('campoStatus').value.trim(),
-    prioridade: document.getElementById('campoPrioridade').value,
-    responsavel: document.getElementById('campoResponsavel').value.trim(),
-    registro: paraDataBR(document.getElementById('campoRegistro').value),
-    previsao: paraDataBR(document.getElementById('campoPrevisao').value)
-  };
-
-  try {
-    await chamarBackend('criar', { tarefa, usuario: usuarioAtual, senha: senhaAtual });
-    document.getElementById('campoAtividade').value = '';
-    document.getElementById('campoStatus').value = '';
-    document.getElementById('campoResponsavel').value = '';
-    document.getElementById('campoPrevisao').value = '';
-    document.getElementById('campoPrioridade').value = '';
-    await carregarTarefas(false);
-  } catch (err) {
-    erroEl.textContent = err.message;
-  }
-});
-
-/* ---------------- Editar (modal) ---------------- */
-
-function abrirEdicao(id) {
-  const t = tarefasCache.find(x => String(x.id) === String(id));
-  if (!t) return;
-  document.getElementById('modalTituloTarefa').textContent = 'Editar tarefa #' + t.id;
-  document.getElementById('editId').value = t.id;
-  preencherSelectCategoria('editCategoria');
-  const selCat = document.getElementById('editCategoria');
-  if (t.categoria && categoriasLista.indexOf(t.categoria) === -1) {
-    // categoria antiga que já não existe: mantém visível até o usuário escolher outra
-    selCat.insertAdjacentHTML('afterbegin', `<option value="${escapeHtml(t.categoria)}">${escapeHtml(rotuloCategoria(t.categoria))} (categoria removida)</option>`);
-  }
-  selCat.value = t.categoria;
-  document.getElementById('editAtividade').value = t.atividade || '';
-  document.getElementById('editStatus').value = t.status || '';
-  document.getElementById('editPrioridade').value = t.prioridade || '';
-  document.getElementById('editResponsavel').value = t.responsavel || '';
-  document.getElementById('editRegistro').value = paraInputDate(t.registro);
-  document.getElementById('editPrevisao').value = paraInputDate(t.previsao);
-  document.getElementById('erroEdicao').textContent = '';
-  modalTarefa.show();
-}
-
-document.getElementById('btnSalvarEdicao').addEventListener('click', async () => {
-  if (!exigirLogin()) return;
-  const id = document.getElementById('editId').value;
-  const erroEl = document.getElementById('erroEdicao');
-  erroEl.textContent = '';
-  const atividade = document.getElementById('editAtividade').value.trim();
-  if (!atividade) { erroEl.textContent = 'Descreva a atividade antes de salvar.'; return; }
-
-  const tarefa = {
-    categoria: document.getElementById('editCategoria').value,
-    atividade,
-    status: document.getElementById('editStatus').value.trim(),
-    prioridade: document.getElementById('editPrioridade').value,
-    responsavel: document.getElementById('editResponsavel').value.trim(),
-    registro: paraDataBR(document.getElementById('editRegistro').value),
-    previsao: paraDataBR(document.getElementById('editPrevisao').value)
-  };
-
-  try {
-    await chamarBackend('editar', { id, tarefa, usuario: usuarioAtual, senha: senhaAtual });
-    modalTarefa.hide();
-    await carregarTarefas(false);
-  } catch (err) {
-    erroEl.textContent = err.message;
-  }
-});
-
-async function finalizarTarefa(id) {
-  if (!exigirLogin()) return;
-  if (!confirm('Deseja realmente finalizar esta atividade?')) return;
-  try {
-    await chamarBackend('finalizar', { id, usuario: usuarioAtual, senha: senhaAtual });
-    await carregarTarefas(false);
-  } catch (err) {
-    alert('Não foi possível finalizar: ' + err.message);
-  }
-}
-
-async function reabrirTarefa(id) {
-  if (!exigirLogin()) return;
-  if (!confirm('Deseja reabrir esta atividade? Ela voltará para "em aberto".')) return;
-  try {
-    await chamarBackend('reabrir', { id, usuario: usuarioAtual, senha: senhaAtual });
-    await carregarTarefas(false);
-  } catch (err) {
-    alert('Não foi possível reabrir: ' + err.message);
-  }
-}
-
-document.getElementById('btnAtualizar').addEventListener('click', () => carregarTarefas(false));
-document.getElementById('filtroPrioridade').addEventListener('change', renderizar);
-document.getElementById('filtroResponsavel').addEventListener('input', renderizar);
-document.getElementById('filtroAlteradoPor').addEventListener('change', renderizar);
-document.getElementById('filtroPeriodo').addEventListener('change', renderizar);
-
-/* ---------------- Pauta de impressão ---------------- */
-
-function paraData(brDate) {
-  if (!brDate || !brDate.includes('/')) return null;
-  const [d, m, y] = brDate.split('/');
-  return new Date(y, m - 1, d);
-}
-
-/** Extrai só a parte de data de um valor "dd/MM/yyyy HH:mm" (como ultimaAtualizacao). */
-function paraDataHora(brDateTime) {
-  if (!brDateTime) return null;
-  const dataParte = brDateTime.split(' ')[0];
-  return paraData(dataParte);
-}
-
-/** Segunda-feira (00:00) da semana atual, considerando a data de hoje. */
-function inicioSemana() {
-  const hoje = new Date();
-  hoje.setHours(0, 0, 0, 0);
-  const diaSemana = hoje.getDay(); // 0=domingo, 1=segunda, ... 6=sábado
-  const diffParaSegunda = diaSemana === 0 ? 6 : diaSemana - 1;
-  const segunda = new Date(hoje);
-  segunda.setDate(hoje.getDate() - diffParaSegunda);
-  return segunda;
-}
-
-/** Domingo (23:59:59) da semana atual. */
-function fimSemana() {
-  const fim = new Date(inicioSemana());
-  fim.setDate(fim.getDate() + 6);
-  fim.setHours(23, 59, 59, 999);
-  return fim;
-}
-
-/** Segunda-feira (00:00) da semana anterior. */
-function inicioSemanaAnterior() {
-  const inicio = new Date(inicioSemana());
-  inicio.setDate(inicio.getDate() - 7);
-  return inicio;
-}
-
-/** Domingo (23:59:59) da semana anterior — o dia antes da segunda-feira atual. */
-function fimSemanaAnterior() {
-  const fim = new Date(inicioSemana());
-  fim.setDate(fim.getDate() - 1);
-  fim.setHours(23, 59, 59, 999);
-  return fim;
-}
-
-function diasDeAtraso(previsaoBR) {
-  const p = paraData(previsaoBR);
-  if (!p) return 0;
-  const hoje = new Date(); hoje.setHours(0,0,0,0); p.setHours(0,0,0,0);
-  return Math.round((hoje - p) / 86400000);
-}
-
-function finalizadaNosUltimosDias(t, dias) {
-  const d = paraData(t.dataFinalizacao);
-  if (!d) return false;
-  const hoje = new Date(); hoje.setHours(0,0,0,0); d.setHours(0,0,0,0);
-  const diff = Math.round((hoje - d) / 86400000);
-  return diff >= 0 && diff <= dias;
-}
-
-function itemLinha(t, metaTexto) {
-  const prioClasse = t.prioridade === 'Alta' ? 'prio-alta' : t.prioridade === 'Média' ? 'prio-media' : t.prioridade === 'Baixa' ? 'prio-baixa' : '';
-  const tagPrioridade = t.prioridade ? `<span class="${prioClasse}">${escapeHtml(t.prioridade)}</span>` : 'sem prioridade';
-  return `<div class="pt-item">
-    <span class="pt-desc">
-      <span class="pt-tag">Registro: ${escapeHtml(t.registro || '—')} · Prioridade: ${tagPrioridade}</span>
-      <b>${escapeHtml(t.atividade)}</b>${t.status ? ' — ' + escapeHtml(t.status) : ''}
-    </span>
-    ${metaTexto ? `<span class="pt-meta">${escapeHtml(metaTexto)}</span>` : ''}
-  </div>`;
-}
-
-function gerarConteudoImpressao() {
-  const hoje = new Date();
-  const dataFmt = hoje.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
-
-  const temSelecao = selecionadas.size > 0;
-  const porSelecao = t => !temSelecao || selecionadas.has(String(t.id));
-
-  const abertas = tarefasCache.filter(t => t.concluida !== 'SIM');
-  const baseCategoria = temSelecao ? tarefasCache.filter(t => t.concluida !== 'SIM' && porSelecao(t)) : abertas;
-  const concluidasSelecionadas = temSelecao ? tarefasCache.filter(t => t.concluida === 'SIM' && porSelecao(t)) : [];
-
-
-  let html = `
-    <h1 class="pt-titulo">Pauta de Engenharia</h1>
-    <div class="pt-subtitulo">Reunião de ${dataFmt}${temSelecao ? ' · ' + selecionadas.size + ' item(ns) selecionado(s) para discussão' : ''}</div>
-    <div class="pt-resumo">
-      <div><b>${tarefasCache.filter(t => t.concluida !== 'SIM').length}</b> em aberto (total)</div>
-      <div><b>${tarefasCache.filter(t => (t.situacao || '').startsWith('Atrasado')).length}</b> atrasadas (total)</div>
-      <div><b>${tarefasCache.filter(t => t.concluida !== 'SIM' && t.prioridade === 'Alta').length}</b> prioridade alta (total)</div>
-      <div><b>${tarefasCache.filter(t => t.concluida === 'SIM').length}</b> concluídas (total)</div>
-    </div>
-  `;
-
-  categoriasLista.forEach(cat => {
-    const itens = baseCategoria.filter(t => t.categoria === cat);
-    if (itens.length === 0) return;
-    html += `
-      <div class="pt-secao">
-        <h2>${escapeHtml(rotuloCategoria(cat))}</h2>
-        ${itens.map(t => itemLinha(t)).join('')}
-      </div>`;
-  });
-
-  // tarefas cuja categoria foi removida da lista não podem sumir da pauta
-  const semCategoria = baseCategoria.filter(t => categoriasLista.indexOf(t.categoria) === -1);
-  if (semCategoria.length) {
-    html += `
-      <div class="pt-secao">
-        <h2>Sem categoria</h2>
-        ${semCategoria.map(t => itemLinha(t)).join('')}
-      </div>`;
-  }
-
-  if (concluidasSelecionadas.length) {
-    html += `
-      <div class="pt-secao">
-        <h2>Concluídas</h2>
-        ${concluidasSelecionadas.map(t => itemLinha(t, t.dataFinalizacao ? 'finalizada em ' + t.dataFinalizacao : '')).join('')}
-      </div>`;
-  }
-
-  document.getElementById('areaImpressao').innerHTML = html;
-}
-
-document.getElementById('btnImprimir').addEventListener('click', () => {
-  gerarConteudoImpressao();
-  setTimeout(() => window.print(), 80);
-});
-
-aplicarCategorias(categoriasLista);
-carregarTarefas();
-carregarOpcoesFiltroUsuario();
-</script>
+  </script>
 </body>
 </html>
